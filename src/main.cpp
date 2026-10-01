@@ -1,16 +1,9 @@
-/*
-Raylib example file.
-This is an example main file for a simple raylib project.
-Use this as a starting point or replace it with your code.
-
-by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
-
-*/
-
 #include <iostream>
 #include <vector>
 #include "raylib.h"
-#include "resource_dir.h"	// utility header for SearchAndSetResourceDir
+#include "resource_dir.h"
+#include "cells.h"
+
 const int BLOCK = 20;
 
 int main ()
@@ -50,17 +43,7 @@ int main ()
       DrawCircle(10, 10, 5.0f, RED);
     }
 
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < cols; j++){
-        if(grid[i][j] == 0){
-          DrawRectangleLines(j*BLOCK, i*BLOCK, BLOCK, BLOCK, WHITE);
-        }
-        if(grid[i][j] == 1){
-          DrawRectangleLines(j*BLOCK, i*BLOCK, BLOCK, BLOCK, WHITE);
-          DrawRectangle(j*BLOCK + BLOCK/10, i*BLOCK + BLOCK/10, BLOCK - BLOCK / 5, BLOCK - BLOCK / 5, WHITE);
-        }
-      }
-    }
+    DrawCells(rows, cols, BLOCK, grid);
 
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) == true){
       int i = GetMouseX() / BLOCK;
