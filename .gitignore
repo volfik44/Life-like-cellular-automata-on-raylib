@@ -4,6 +4,9 @@ obj/
 *.o
 *.d
 
+# Raylib source — auto-downloaded by premake5 on first build
+build/external/
+
 # Premake-generated project files (recreated per-platform via premake5)
 build/build_files/
 /*.sln
