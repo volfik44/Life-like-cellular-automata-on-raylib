@@ -9,43 +9,43 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug_x64)
-  test_config = debug_x64
+  Game_of_Life_config = debug_x64
   raylib_config = debug_x64
 
 else ifeq ($(config),debug_x86)
-  test_config = debug_x86
+  Game_of_Life_config = debug_x86
   raylib_config = debug_x86
 
 else ifeq ($(config),debug_arm64)
-  test_config = debug_arm64
+  Game_of_Life_config = debug_arm64
   raylib_config = debug_arm64
 
 else ifeq ($(config),release_x64)
-  test_config = release_x64
+  Game_of_Life_config = release_x64
   raylib_config = release_x64
 
 else ifeq ($(config),release_x86)
-  test_config = release_x86
+  Game_of_Life_config = release_x86
   raylib_config = release_x86
 
 else ifeq ($(config),release_arm64)
-  test_config = release_arm64
+  Game_of_Life_config = release_arm64
   raylib_config = release_arm64
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := test raylib
+PROJECTS := Game-of-Life raylib
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-test: raylib
-ifneq (,$(test_config))
-	@echo "==== Building test ($(test_config)) ===="
-	@${MAKE} --no-print-directory -C . -f test.make config=$(test_config)
+Game-of-Life: raylib
+ifneq (,$(Game_of_Life_config))
+	@echo "==== Building Game-of-Life ($(Game_of_Life_config)) ===="
+	@${MAKE} --no-print-directory -C . -f Game-of-Life.make config=$(Game_of_Life_config)
 endif
 
 raylib:
@@ -55,7 +55,7 @@ ifneq (,$(raylib_config))
 endif
 
 clean:
-	@${MAKE} --no-print-directory -C . -f test.make clean
+	@${MAKE} --no-print-directory -C . -f Game-of-Life.make clean
 	@${MAKE} --no-print-directory -C . -f raylib.make clean
 
 help:
@@ -72,7 +72,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
-	@echo "   test"
+	@echo "   Game-of-Life"
 	@echo "   raylib"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
