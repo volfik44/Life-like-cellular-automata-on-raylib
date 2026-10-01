@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-void DrawCells(int rows, int cols, int BLOCK, std::vector<std::vector<int>>& grid){
+void DrawCells(int rows, int cols, int BLOCK, const std::vector<std::vector<int>>& grid){
   for(int i = 0; i < rows; i++){
     for(int j = 0; j < cols; j++){
       if(grid[i][j] == 0){
@@ -15,4 +15,17 @@ void DrawCells(int rows, int cols, int BLOCK, std::vector<std::vector<int>>& gri
       }
     }
   }
-} 
+}
+
+void ClickCell(int BLOCK, std::vector<std::vector<int>>& grid){
+  if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) == true){
+    int i = GetMouseX() / BLOCK;
+    int j = GetMouseY() / BLOCK;
+    if(grid[j][i] == 0){
+      grid[j][i] = 1;
+    }
+    else{
+      grid[j][i] = 0;
+    }
+  }
+}

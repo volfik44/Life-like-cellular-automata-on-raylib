@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "resource_dir.h"
 #include "cells.h"
+#include "canvas.h"
 
 const int BLOCK = 20;
 
@@ -36,27 +37,11 @@ int main ()
 
 		ClearBackground(BLACK);
 
-    if(IsRunning){
-      DrawCircle(10, 10, 5.0f, GREEN);
-    }
-    if(!IsRunning){
-      DrawCircle(10, 10, 5.0f, RED);
-    }
-
     DrawCells(rows, cols, BLOCK, grid);
 
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) == true){
-      int i = GetMouseX() / BLOCK;
-      int j = GetMouseY() / BLOCK;
-      if(grid[j][i] == 0){
-        grid[j][i] = 1;
-      }
-      else{
-        grid[j][i] = 0;
-      }
-    }
+    Pause(IsRunning);
 
-    if(IsKeyPressed(KEY_SPACE) == true) IsRunning = !IsRunning;
+    ClickCell(BLOCK, grid);
 
     if(IsRunning == true){
       timer = timer + GetFrameTime();
