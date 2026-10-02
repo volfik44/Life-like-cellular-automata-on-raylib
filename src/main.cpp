@@ -5,7 +5,6 @@
 #include "cells.h"
 #include "canvas.h"
 
-const int BLOCK = 20;
 
 int main ()
 {
@@ -18,12 +17,13 @@ int main ()
   ShowCursor();
   EnableCursor();
   
-  int width = 1920;
-  int height = 1080;
+  int BLOCK = 20;
+  int width = 5000;
+  int height = 5000;
   int rows = height / BLOCK + 1;
   int cols = width / BLOCK + 1;
 
-  float step = 0.1f;
+  float step = 0.01f;
   float timer = 0.0f;
 
   bool IsRunning = false;
@@ -38,6 +38,8 @@ int main ()
 		ClearBackground(BLACK);
 
     DrawCells(rows, cols, BLOCK, grid);
+
+    Zoom(BLOCK);
 
     ClickCell(BLOCK, grid, next_grid);
 

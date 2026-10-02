@@ -5,10 +5,13 @@
 
 void Pause(bool& IsRunning){
   if(IsKeyPressed(KEY_SPACE) == true) IsRunning = !IsRunning;
-  if(IsRunning){
-    DrawCircle(10, 10, 5.0f, GREEN);
+}
+
+void Zoom(int& BLOCK){
+  if(IsKeyPressed(KEY_MINUS) || IsKeyPressed(KEY_KP_SUBTRACT)){
+    BLOCK = BLOCK*0.8;
   }
-  if(!IsRunning){
-    DrawCircle(10, 10, 5.0f, RED);
+  if(IsKeyPressed(KEY_EQUAL) || IsKeyPressed(KEY_KP_ADD)){
+    BLOCK = BLOCK*1.25;
   }
 }
