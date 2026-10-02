@@ -39,47 +39,13 @@ int main ()
 
     DrawCells(rows, cols, BLOCK, grid);
 
+    ClickCell(BLOCK, grid, next_grid);
+
     Pause(IsRunning);
 
-    ClickCell(BLOCK, grid);
-
-    if(IsRunning == true){
-      timer = timer + GetFrameTime();
-      if(timer >= step){
-        for(int i = 1; i < rows - 1; i++){
-          for(int j = 1; j < cols - 1; j++){
-            int alive = 0;
-            for(int m = 0; m <= 2; m++){
-              for(int n = 0; n <= 2; n++){
-                if(m == 1 && n == 1){
-                  continue;
-                }
-                else if(grid[i - 1 + m][j - 1 + n] == 1){
-                  alive++;
-                }
-              }
-            }
-            if(grid[i][j] == 1){
-              if(alive < 2) next_grid[i][j] = 0;
-              if(alive == 2 || alive == 3) next_grid[i][j] = 1;
-              if(alive > 3) next_grid[i][j] = 0;
-            }
-            if(grid[i][j] == 0){
-              if(alive == 3) next_grid[i][j] = 1;
-            }
-          }
-        }
-        for(int i = 1; i < rows - 1; i++){
-          for(int j = 1; j < cols - 1; j++){
-            grid[i][j] = next_grid[i][j];
-          }
-        }
-
-        timer = 0.0f;
-      }
-    }
-
-		EndDrawing();
+    UpdateCells(IsRunning, timer, step, rows, cols, grid, next_grid);
+		
+    EndDrawing();
 	}
 
 	CloseWindow();

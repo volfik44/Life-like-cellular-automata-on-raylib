@@ -118,7 +118,11 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/canvas.o
+GENERATED += $(OBJDIR)/cells.o
 GENERATED += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/canvas.o
+OBJECTS += $(OBJDIR)/cells.o
 OBJECTS += $(OBJDIR)/main.o
 
 # Rules
@@ -183,6 +187,12 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/canvas.o: src/canvas.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/cells.o: src/cells.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: src/main.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
