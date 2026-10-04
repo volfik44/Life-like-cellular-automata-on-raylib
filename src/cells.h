@@ -1,9 +1,15 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "raylib.h"
+#include <set>
+#include <utility>
+#include <map>
+#include <cmath>
 
-void DrawCells(int rows, int cols, int BLOCK, const std::vector<std::vector<int>>& grid);
+void DrawCells(int rows, int cols, int BLOCK, const std::set<std::pair<int, int>>& alive);
 
-void ClickCell(int BLOCK, std::vector<std::vector<int>>& grid, std::vector<std::vector<int>>& next_grid);
+void ClickCell(int BLOCK, Camera2D camera, std::set<std::pair<int, int>>& alive);
 
-void UpdateCells(bool IsRunning, float& timer, float step, int rows, int cols, std::vector<std::vector<int>>& grid, std::vector<std::vector<int>>& next_grid);
+void UpdateCells(bool IsRunning, float& timer, float step, int rows, int cols, std::set<std::pair<int, int>>& alive, std::map<std::pair<int, int>, int>& NeighborCount);
+

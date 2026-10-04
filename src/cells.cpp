@@ -2,69 +2,67 @@
 #include "raylib.h"
 #include <iostream>
 #include <vector>
+#include <map>
+#include <utility>
+#include <set>
+#include <cmath>
 
-void DrawCells(int rows, int cols, int BLOCK, const std::vector<std::vector<int>>& grid){
+void DrawCells(int rows, int cols, int BLOCK, const std::set<std::pair<int, int>>& alive){
   for(int i = 0; i < rows; i++){
     for(int j = 0; j < cols; j++){
-      if(grid[i][j] == 0){
+      if(!alive.count({i, j})){
         DrawRectangleLines(j*BLOCK, i*BLOCK, BLOCK, BLOCK, GREEN);
       }
-      if(grid[i][j] == 1){
+      if(alive.count({i, j})){
         DrawRectangleLines(j*BLOCK, i*BLOCK, BLOCK, BLOCK, GREEN);
-        DrawRectangle(j*BLOCK + BLOCK/10, i*BLOCK + BLOCK/10, BLOCK - BLOCK / 5, BLOCK - BLOCK / 5, GREEN);
+        DrawRectangle(j*BLOCK + BLOCK/10, i*BLOCK + BLOCK/10, BLOCK*0.8, BLOCK*0.8,  GREEN);
       }
     }
   }
 }
 
-void ClickCell(int BLOCK, std::vector<std::vector<int>>& grid, std::vector<std::vector<int>>& next_grid){
+void ClickCell(int BLOCK, Camera2D camera, std::set<std::pair<int, int>>& alive){
   if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) == true){
-    int i = GetMouseX() / BLOCK;
-    int j = GetMouseY() / BLOCK;
-    if(grid[j][i] == 0){
-      grid[j][i] = 1;
-      next_grid[j][i] = 1;
+    Vector2 world = GetScreenToWorld2D(GetMousePosition(), camera);
+    int i = world.x / BLOCK;
+    int j = world.y / BLOCK;
+    if(alive.count({j, i})) {
+      alive.erase({j, i});
     }
-    else{
-      grid[j][i] = 0;
-      next_grid[j][i] = 0;
+    else {
+      alive.insert({j, i});
     }
   }
 }
-void UpdateCells(bool IsRunning, float& timer, float step, int rows, int cols, std::vector<std::vector<int>>& grid, std::vector<std::vector<int>>& next_grid){
+
+void UpdateCells(bool IsRunning, float& timer, float step, int rows, int cols, std::set<std::pair<int, int>>& alive, std::map<std::pair<int, int>, int>& NeighborCount){
   if(IsRunning == true){
     timer = timer + GetFrameTime();
     if(timer >= step){
-      for(int i = 1; i < rows - 1; i++){
-        for(int j = 1; j < cols - 1; j++){
-          int alive = 0;
-          for(int m = 0; m <= 2; m++){
-            for(int n = 0; n <= 2; n++){
-              if(m == 1 && n == 1){
-                continue;
-              }
-              else if(grid[i - 1 + m][j - 1 + n] == 1){
-                alive++;
-              }
-            }
-          }
-          if(grid[i][j] == 1){
-            if(alive < 2) next_grid[i][j] = 0;
-            if(alive == 2 || alive == 3) next_grid[i][j] = 1;
-            if(alive > 3) next_grid[i][j] = 0;
-          }
-          if(grid[i][j] == 0){
-            if(alive == 3) next_grid[i][j] = 1;
-            else if (alive != 3) next_grid[i][j] = 0;
+      for(const auto& cell : alive){
+        for(int i = -1; i <= 1; i++){
+          for(int j = -1; j <= 1; j++){
+            if(i == 0 && j == 0) NeighborCount[{cell.first, cell.second}];
+            else NeighborCount[{cell.first + i, cell.second + j}]++;
           }
         }
       }
-      for(int i = 1; i < rows - 1; i++){
-        for(int j = 1; j < cols - 1; j++){
-          grid[i][j] = next_grid[i][j];
+      for(const auto& [cell, n] : NeighborCount){
+        if(alive.count(cell) == 1){
+          if(n < 2 || n > 3) alive.erase(cell);
+          if(n == 2 || n == 3) continue;
+        } 
+        if(alive.count(cell) == 0){
+          if(n == 3) alive.insert(cell);
+        }
+        if(alive.count(cell) == 1 && (cell.first < 0 || cell.first >= cols || cell.second < 0 || cell.second >= rows)){
+          alive.erase(cell);
         }
       }
+      NeighborCount.clear();
       timer = 0.0f;
     }
   }
 }
+
+
