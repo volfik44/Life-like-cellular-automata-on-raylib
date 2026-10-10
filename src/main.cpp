@@ -29,14 +29,22 @@ int main ()
   int height = 2000;
   int rows = height / BLOCK + 1;
   int cols = width / BLOCK + 1;
+  int rule_b, rule_s;
 
-  float step = 0.05f;
+  float step = 0.1f;
   float timer = 0.0f;
 
   bool IsRunning = false;
 
   std::set<std::pair<int, int>> alive;
   std::map<std::pair<int, int>, int> NeighborCount;
+
+  RenderTexture2D gridTexture = LoadRenderTexture(cols*BLOCK, rows*BLOCK);
+
+  BeginTextureMode(gridTexture);
+  ClearBackground(BLACK);
+  InitDraw(rows, cols, BLOCK, alive);
+  EndTextureMode();
 
 	while (!WindowShouldClose())
 	{
@@ -54,14 +62,16 @@ int main ()
 
     BeginMode2D(camera);
 
+    DrawTextureRec(gridTexture.texture, (Rectangle){0, 0, (float)gridTexture.texture.width, (float)-gridTexture.texture.height}, Vector2{0, 0}, WHITE);
+
 		ClearBackground(BLACK);
 
-    DrawCells(rows, cols, BLOCK, alive);
-   
+    DrawCells(BLOCK, alive);
+
     Pause(IsRunning);
-    
-    ClickCell(BLOCK, camera, alive);
-    
+
+    ClickCell(BLOCK, rows, cols ,camera, alive);
+
     UpdateCells(IsRunning, timer, step, rows, cols, alive, NeighborCount);
 		
     EndMode2D();
@@ -70,5 +80,8 @@ int main ()
 	}
 
 	CloseWindow();
+
+  UnloadRenderTexture(gridTexture);
+
 	return 0;
 }
