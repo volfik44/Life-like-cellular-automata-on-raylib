@@ -2,17 +2,17 @@
 
 A cellular automata simulator written in C++ using [raylib](https://www.raylib.com/).
 Draw cells, zoom and pan across an effectively infinite grid, and watch Conway's
-Game of Life evolve — all rendered at a smooth 60 FPS.
+Game of Life evolve - all rendered at a smooth 60 FPS.
 
 ## Features
 
-- **Click to draw / erase cells** — left-click toggles a cell between alive and dead.
-- **Camera controls** — pan with `W` `A` `S` `D`, zoom with the mouse wheel.
-- **Pause / resume** — press `Space` to start and stop the simulation.
-- **Configurable simulation speed** — the update rate is a single tweakable constant.
-- **Fast grid rendering** — the static grid is baked into a render texture once,
+- **Click to draw / erase cells** - left-click toggles a cell between alive and dead.
+- **Camera controls** - pan with `W` `A` `S` `D`, zoom with the mouse wheel.
+- **Pause / resume** - press `Space` to start and stop the simulation.
+- **Configurable simulation speed** - the update rate is a single tweakable constant.
+- **Fast grid rendering** - the static grid is baked into a render texture once,
   so it's not redrawn every frame.
-- **Life-like rules** — implements the classic Conway rules (born with 3 neighbors,
+- **Life-like rules** - implements the classic Conway rules (born with 3 neighbors,
   survives with 2 or 3), ready to be extended to other life-like rule sets.
 
 ## Controls
