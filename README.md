@@ -1,8 +1,7 @@
 # Life like cellular automata on raylib
 
 A cellular automata simulator written in C++ using [raylib](https://www.raylib.com/).
-Draw cells, zoom and pan across an effectively infinite grid, and watch Conway's
-Game of Life evolve - all rendered at a smooth 60 FPS.
+The goal is to make an efficient simulation capable of supporting huge canvas of cells.
 
 ## Features
 
