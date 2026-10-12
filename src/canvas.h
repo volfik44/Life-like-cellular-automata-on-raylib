@@ -5,4 +5,4 @@
 
 void Pause(bool& IsRunning);
 
-void FoV(Camera2D& camera);
+void FoV(const int& width, const int& height, Camera2D& camera);

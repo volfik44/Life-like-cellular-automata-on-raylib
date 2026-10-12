@@ -19,7 +19,7 @@ int main ()
 
   Camera2D camera = {0};
   camera.target = (Vector2){1000.0f, 1000.0f};
-  camera.offset = (Vector2){static_cast<float>(mon_width/2), static_cast<float>(mon_height/2)};
+  camera.offset = (Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
   camera.rotation = 0.0f;
   camera.zoom = 1.0f;
 
@@ -51,8 +51,8 @@ int main ()
   EndTextureMode();
 
 	while (!WindowShouldClose())
-	{ 
-    FoV(camera);
+	{
+    FoV(width, height, camera);
 
 		BeginDrawing();
 
