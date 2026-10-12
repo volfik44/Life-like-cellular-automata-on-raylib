@@ -11,11 +11,15 @@ int main ()
 {
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
 
-	InitWindow(1920, 1080, "Game of Life");
+  int monitor = GetCurrentMonitor();
+  int mon_width = GetMonitorWidth(monitor);
+  int mon_height = GetMonitorHeight(monitor);
+
+	InitWindow(1000, 1000, "Game of Life");
 
   Camera2D camera = {0};
-  camera.target = (Vector2){500.0f, 500.0f};
-  camera.offset = (Vector2){960.0f, 540.0f};
+  camera.target = (Vector2){1000.0f, 1000.0f};
+  camera.offset = (Vector2){static_cast<float>(mon_width/2), static_cast<float>(mon_height/2)};
   camera.rotation = 0.0f;
   camera.zoom = 1.0f;
 
@@ -24,7 +28,7 @@ int main ()
   ShowCursor();
   EnableCursor();
   
-  int BLOCK = 20;
+  int BLOCK = 10;
   int width = 2000;
   int height = 2000;
   int rows = height / BLOCK + 1;
@@ -47,17 +51,9 @@ int main ()
   EndTextureMode();
 
 	while (!WindowShouldClose())
-	{
+	{ 
+    FoV(camera);
 
-    if (IsKeyDown(KEY_D)) camera.target.x += (5.0f / camera.zoom);
-    if (IsKeyDown(KEY_A)) camera.target.x -= (5.0f / camera.zoom);
-    if (IsKeyDown(KEY_W)) camera.target.y -= (5.0f / camera.zoom);
-    if (IsKeyDown(KEY_S)) camera.target.y += (5.0f / camera.zoom);
-    float wheel = GetMouseWheelMove();
-    if (wheel != 0) {
-      if (wheel < 0 && camera.zoom > 0.1) camera.zoom *= 0.8;
-      if (wheel > 0 && camera.zoom < 10) camera.zoom *= 1.25;
-    }
 		BeginDrawing();
 
     BeginMode2D(camera);

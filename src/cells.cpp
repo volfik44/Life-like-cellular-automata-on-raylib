@@ -1,11 +1,4 @@
 #include "cells.h"
-#include "raylib.h"
-#include <iostream>
-#include <vector>
-#include <map>
-#include <utility>
-#include <set>
-#include <cmath>
 
 void InitDraw(const int& rows, const int& cols, const int& BLOCK, const std::set<std::pair<int, int>>& alive){ 
   for(int i = 0; i < rows; i++){
